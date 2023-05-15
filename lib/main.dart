@@ -1,15 +1,17 @@
 import 'package:engsn_corected/data/repository/user_repository.dart';
 import 'package:engsn_corected/logic/home/chat/chat_bloc.dart';
 import 'package:engsn_corected/view/screens/home/home_pages/chats/chat_list.dart';
+import 'package:engsn_corected/view/screens/login/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/adapters.dart';
-
 
 import 'app.dart';
 import 'data/models/user.dart';
 import 'logic/app/app_bloc.dart';
 import 'logic/home/messages/messages_bloc.dart';
+import 'logic/home/profile/profile_bloc.dart';
+import 'logic/login/login_bloc.dart';
 
 void main() async {
   const String userBoxName = "user_box";
@@ -19,23 +21,27 @@ void main() async {
 
   UserRepository _userRepository = UserRepository(userBox);
 
-  runApp(
-      RepositoryProvider(
-        create: (context) => _userRepository,
-        child: MultiBlocProvider(
-          providers: [
-            BlocProvider(
-              create: (context) => AppBloc(userRepository: _userRepository),
-            ),
-            BlocProvider(
-              create: (context) => ChatBloc(context.read<AppBloc>()),
-            ),
-            BlocProvider(
-              create: (context) => MessagesBloc(_userRepository),
-            ),
-          ],
-          child: App(),
+  runApp(RepositoryProvider(
+    create: (context) => _userRepository,
+    child: MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => AppBloc(userRepository: _userRepository),
         ),
-      )
-  );
+        BlocProvider(
+          create: (context) => ChatBloc(context.read<AppBloc>()),
+        ),
+        BlocProvider(
+          create: (context) => MessagesBloc(_userRepository),
+        ),
+        BlocProvider(
+          create: (context) => ProfileBloc(_userRepository),
+        ),
+        BlocProvider<LoginBloc>(
+            create: (context) => LoginBloc(_userRepository)
+        ),
+      ],
+      child: App(),
+    ),
+  ));
 }

@@ -23,21 +23,6 @@ class AppBloc extends Bloc<AppEvent, AppState> {
           }
         }
     );
-    on<LoginButtonPressed>((event, emit) async {
-      print("login button pressed..");
-      emit(AppLoading());
-      var result = await userRepository.login();
-      print(result);
-      if(result == RepositoryResponseCodes.succes){
-        print("Login succes");
-        emit(AuthUserState());
-      }
-      else{
-        print('Login failed');
-        emit(UnAuthUserState());
-      }
-
-    });
   }
 
   final UserRepository userRepository;

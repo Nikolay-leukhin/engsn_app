@@ -10,7 +10,8 @@ enum ApiMethods {
   existingRequest,
   loadSession,
   registerSession,
-  getMessages
+  getMessages,
+  sendMessage
 }
 
 
@@ -26,7 +27,8 @@ class UserRepositoryAPI{
     ApiMethods.existingRequest: "$host/user/is_exist",
     ApiMethods.loadSession: "$host/session/user_session",
     ApiMethods.registerSession: "$host/session/add_session",
-    ApiMethods.getMessages: "$host/message/get_messages"
+    ApiMethods.getMessages: "$host/message/get_messages",
+    ApiMethods.sendMessage: "$host/message/add_message"
   };
 
 
@@ -98,6 +100,22 @@ class UserRepositoryAPI{
     }catch(ex){
       throw ex;
     }
+  }
 
+  Future<dynamic> sendMessageRequest(int userId, int sessionId, int order, String text, String sender) async{
+    Map<String, dynamic> reqData = {
+      "user_id": userId,
+      "session_id": sessionId,
+      "message_order": order,
+      "message_text": text,
+      "sender": sender
+    };
+
+    try{
+      final Response response = await dio.post(apiURL[ApiMethods.sendMessage]!, data: reqData);
+      return response.data;
+    }catch(ex){
+      throw ex;
+    }
   }
 }

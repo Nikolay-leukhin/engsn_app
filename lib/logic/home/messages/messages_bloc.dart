@@ -14,6 +14,7 @@ class MessagesBloc extends Bloc<MessagesEvent, MessagesState> {
 
   MessagesBloc(this.userRepository) : super(MessagesLoading()) {
     on<LoadMessagesEvent>(_loadMessages);
+    on<SendMessageEvent>(_sendMessage);
   }
 
   void _loadMessages(event, emit) async{
@@ -29,5 +30,9 @@ class MessagesBloc extends Bloc<MessagesEvent, MessagesState> {
     }else{
       emit(MessagesLoadedFailure());
     }
+  }
+
+  void _sendMessage(event, emit) async{
+    var response = await userRepository.sendMessage(event.userId, event.sessionId, event.order, event.text, event.sender);
   }
 }

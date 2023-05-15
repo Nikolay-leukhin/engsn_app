@@ -29,10 +29,11 @@ class _AppState extends State<App> {
       theme: ThemeData.dark(),
       home: Scaffold(
         body: BlocConsumer<AppBloc, AppState>(
-          listener: (_, __) {},
+          listener: (context, state) {},
           builder: (otherContext, state) {
             if (state is AuthUserState){
               return HomePage();
+              // return LoginPage();
             }else if (state is UnAuthUserState){
               return LoginPage();
             }else{

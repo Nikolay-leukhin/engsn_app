@@ -53,8 +53,8 @@ class UserRepository implements AbstractUserRepository{
   }
 
   @override
-  Future login() async{
-    final Map<String, dynamic> existing = await isUserExist();
+  Future login(String userEmail, String userPassword) async{
+    final Map<String, dynamic> existing = await isUserExist(userEmail, userPassword);
     if (existing['is_exist'] == false){
       return RepositoryResponseCodes.incorrectData;
     }
@@ -75,12 +75,12 @@ class UserRepository implements AbstractUserRepository{
   }
 
   @override
-  Future<Map<String, dynamic>> isUserExist() async {
-    if (email == null || password == null) {
+  Future<Map<String, dynamic>> isUserExist(String userEmail, String userPassword) async {
+    if (userEmail == "" || userPassword == "") {
       print("one of the required isnt filled");
       throw ArgumentError.value("Fill all fields");
     }
-    var response = await api.getUserExistingRequest(this.email!, this.password!);
+    var response = await api.getUserExistingRequest(userEmail, userPassword);
     Map<String, dynamic> responseData = response['content'];
     return responseData;
   }
@@ -132,10 +132,10 @@ class UserRepository implements AbstractUserRepository{
   }
 
   @override
-  Future<List<Message>> loadMessages(int sessionId, int userId) async{
+  Future<List<Message>> loadMessages(int sessionId, int userId) async {
     List<dynamic> rawMessages = await api.getRawUserSessionMessages(userId, sessionId);
     List<Message> messages = [];
-    for(int i = 0; i < rawMessages.length; i++){
+    for (int i = 0; i < rawMessages.length; i++) {
       Map<String, dynamic> item = rawMessages[i];
       int itemId = item['id'];
       int itemOrder = item['message_order'];
@@ -146,5 +146,12 @@ class UserRepository implements AbstractUserRepository{
       messages.add(Message(itemId, itemOrder, itemSender, itemSessionId, itemUserId, itemText));
     }
     return messages;
+  }
+
+
+  Future<dynamic> sendMessage(int userId, int sessionId, int order, String text, String sender) async{
+    print("-------MESSAGE SENDING...-------");
+    Map<String, dynamic> rawResponse = await api.sendMessageRequest(userId, sessionId, order, text, sender);
+    print("-------MESSAGE SENDED-------");
   }
 }

@@ -25,7 +25,7 @@ class _ChatItemState extends State<ChatItem> {
           child: GestureDetector(
             onTap: () {
               Navigator.of(context).push(
-                  MaterialPageRoute(builder: (BuildContext context) => MessagesList(title: widget.session.sessionName, id: widget.session.id,))
+                  MaterialPageRoute(builder: (BuildContext context) => MessagesList(session: widget.session))
               );
             },
             child: Container(

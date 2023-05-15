@@ -16,25 +16,22 @@ class ChatAddSessionPopup extends StatefulWidget {
 class _ChatAddSessionPopupState extends State<ChatAddSessionPopup> {
   @override
   Widget build(BuildContext context) {
-    return BlocProvider.value(
-      value: context.read<ChatBloc>(),
-      child: AlertDialog(
-        title: Text("О чем бы вы хотели бы поговорить?"),
-        content: TextField(
-          autofocus: true,
-          controller: widget.controller,
-          decoration: InputDecoration(
-              hintText: "тык и тап.."
-          ),
+    return AlertDialog(
+      title: Text("О чем бы вы хотели бы поговорить?"),
+      content: TextField(
+        autofocus: true,
+        controller: widget.controller,
+        decoration: InputDecoration(
+            hintText: "тык и тап.."
         ),
-        actions: [
-          DefaultElevatedButton(title: "бом", onPressed: () {
-            context.read<ChatBloc>().add(RegisterSessionEvent(sessionName: widget.controller.text));
-            context.read<ChatBloc>().add(LoadSessionsEvent());
-            Navigator.of(context).pop();
-          })
-        ],
       ),
+      actions: [
+        DefaultElevatedButton(title: "бом", onPressed: () {
+          context.read<ChatBloc>().add(RegisterSessionEvent(sessionName: widget.controller.text));
+          context.read<ChatBloc>().add(LoadSessionsEvent());
+          Navigator.of(context).pop();
+        })
+      ],
     );
   }
 }

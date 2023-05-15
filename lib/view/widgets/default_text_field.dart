@@ -24,7 +24,7 @@ class DefaultTextField extends StatefulWidget {
   final double height;
   final double width;
   final EdgeInsets padding;
-  final int maxLines;
+  final int? maxLines;
   final String hintText;
   final bool obscureText;
 

@@ -8,11 +8,11 @@ abstract class AbstractUserRepository{
   String? password;
   String? englishLevel;
 
-  Future<dynamic> login();
+  Future<dynamic> login(String userEmail, String userPassword);
 
   Future<dynamic> addUser();
 
-  Future<dynamic> isUserExist();
+  Future<dynamic> isUserExist(String userEmail, String userPassword);
 
   Future<dynamic> loadUserSessions();
 
