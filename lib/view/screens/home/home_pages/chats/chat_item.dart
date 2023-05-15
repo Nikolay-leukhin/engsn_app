@@ -1,4 +1,5 @@
 import 'package:engsn_corected/view/screens/home/home_pages/chats/messages.dart';
+import 'package:engsn_corected/view/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -24,28 +25,38 @@ class _ChatItemState extends State<ChatItem> {
         Expanded(
           child: GestureDetector(
             onTap: () {
-              Navigator.of(context).push(
-                  MaterialPageRoute(builder: (BuildContext context) => MessagesList(session: widget.session))
-              );
+              Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) => MessagesList(session: widget.session)));
             },
             child: Container(
-              constraints: const BoxConstraints(
-                minHeight: 91
-              ),
-              color: Colors.purple,
+              padding: EdgeInsets.all(10),
+              constraints: const BoxConstraints(minHeight: 80),
+              decoration: BoxDecoration(border: Border.all(color: AppColors.blue, width: 3), borderRadius: BorderRadius.all(Radius.circular(15))),
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [Text('name: ${widget.session.sessionName}'), Text('date: ${widget.session.sessionTimeCreation}')],
               ),
             ),
           ),
         ),
-        SizedBox(width: 40,),
-        PopupMenuButton(
+        SizedBox(
+          width: 20,
+        ),
+        Container(
+          width: 50,
+          height: 50,
+          decoration: BoxDecoration(
+            color: Colors.transparent,
+            shape: BoxShape.circle,
+            border: Border.all(color: AppColors.blue,  width: 3)
+          ),
+          child: PopupMenuButton(
             itemBuilder: (_) => const <PopupMenuItem<String>>[
                   PopupMenuItem<String>(child: Text('Doge'), value: 'удалить'),
                   PopupMenuItem<String>(child: Text('Lion'), value: 'изменить'),
                 ],
-            onSelected: (_) {})
+              onSelected: (_) {}),
+        )
       ],
     );
   }
