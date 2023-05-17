@@ -2,6 +2,7 @@
 import 'package:engsn_corected/view/router/app_router.dart';
 import 'package:engsn_corected/view/screens/home/home_screen.dart';
 import 'package:engsn_corected/view/screens/login/login_screen.dart';
+import 'package:engsn_corected/view/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -26,7 +27,9 @@ class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(title: 'project title',
-      theme: ThemeData.dark(),
+      theme: ThemeData(
+        scaffoldBackgroundColor: AppColors.sky,
+      ),
       home: Scaffold(
         body: BlocConsumer<AppBloc, AppState>(
           listener: (context, state) {},

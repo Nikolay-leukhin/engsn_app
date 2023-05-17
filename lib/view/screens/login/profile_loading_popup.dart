@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../logic/login/login_bloc.dart';
+import '../../utils/colors.dart';
 
 class ProfileLoadingPopup extends StatefulWidget {
   const ProfileLoadingPopup({Key? key}) : super(key: key);
@@ -14,6 +15,8 @@ class _ProfileLoadingPopupState extends State<ProfileLoadingPopup> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
+        backgroundColor: AppColors.sky,
+        shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20))),
         elevation: 20,
         content: FractionallySizedBox(
           widthFactor: 0.8,
@@ -34,7 +37,7 @@ class _ProfileLoadingPopupState extends State<ProfileLoadingPopup> {
                     ),
                   );
                 } else {
-                  return Center(
+                  return const Center(
                     child: Text("Somethingwent wrong"),
                   );
                 }

@@ -27,21 +27,23 @@ class _ChatListState extends State<ChatList> {
     return BlocProvider.value(
       value: context.read<ChatBloc>(),
       child: Scaffold(
-        backgroundColor: AppColors.cherry,
         body: RefreshIndicator(
           onRefresh: () async {
             context.read<ChatBloc>().add(LoadSessionsEvent());
           },
-          child: Padding(
-            padding: const EdgeInsets.all(10),
-            child: BlocBuilder<ChatBloc, ChatState>(
+          child: BlocBuilder<ChatBloc, ChatState>(
               builder: (context, state) {
                 if (state is LoadingChatList) {
                   return Center(child: CircularProgressIndicator());
                 }
                 if (state is LoadedChatList) {
                   return Container(
-                    decoration: BoxDecoration(
+                    padding: const EdgeInsets.fromLTRB(10, 10 , 10, 0),
+                    decoration: const  BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage('assets/back.png'),
+                          repeat: ImageRepeat.repeat,
+                        )
                     ),
                     child: ListView.separated(
                       itemCount: state.sessions.length,
@@ -65,20 +67,19 @@ class _ChatListState extends State<ChatList> {
               },
             ),
           ),
-        ),
         floatingActionButton: FloatingActionButton(
           onPressed: () async {
             print("Sesison adding started");
             showDialog(
                 context: context,
                 builder: (context) => ChatAddSessionPopup(
-                      controller: _popupController,
-                      buttonAction: () {},
-                    ));
+                  controller: _popupController,
+                  buttonAction: () {},
+                ));
           },
           child: Icon(Icons.add),
         ),
-      ),
+        ),
     );
   }
 }

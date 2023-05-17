@@ -7,4 +7,5 @@ class AppColors{
   static Color purple = const Color.fromRGBO(163, 102, 255, 1);
   static Color cherry = const Color.fromRGBO(37, 0, 92, 1);
   static Color dark = const Color.fromRGBO(11, 19, 112, 1);
+  static Color sky = const Color.fromRGBO(191, 226, 255, 1);
 }

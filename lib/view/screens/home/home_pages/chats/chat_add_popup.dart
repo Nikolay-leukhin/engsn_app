@@ -3,6 +3,8 @@ import 'package:engsn_corected/view/widgets/default_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../utils/colors.dart';
+
 class ChatAddSessionPopup extends StatefulWidget {
   final TextEditingController controller;
   final Function buttonAction;
@@ -17,12 +19,14 @@ class _ChatAddSessionPopupState extends State<ChatAddSessionPopup> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
+      backgroundColor: AppColors.sky,
+      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20))),
       title: Text("О чем бы вы хотели бы поговорить?"),
       content: TextField(
         autofocus: true,
         controller: widget.controller,
         decoration: InputDecoration(
-            hintText: "тык и тап.."
+            hintText: "ананааасы=)"
         ),
       ),
       actions: [

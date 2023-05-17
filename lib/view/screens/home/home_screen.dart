@@ -1,5 +1,6 @@
 import 'package:engsn_corected/view/router/app_router.dart';
 import 'package:engsn_corected/view/screens/home/home_pages/home_pages.dart';
+import 'package:engsn_corected/view/utils/colors.dart';
 import 'package:engsn_corected/view/widgets/default_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -31,16 +32,28 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('HOME PAGE'),
+          backgroundColor: AppColors.blue,
+          title: const Text('бургер'),
         ),
-        body: pages[_pageIndex],
+        body: Container(
+          decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/back.png'),
+                repeat: ImageRepeat.repeat,
+              )
+          ),
+          child: pages[_pageIndex],
+        ),
         bottomNavigationBar: BottomNavigationBar(
+          backgroundColor: AppColors.blue,
+          selectedItemColor: AppColors.dark,
+          unselectedItemColor: AppColors.sky,
           onTap: _onChanged,
           currentIndex: _pageIndex,
-          items: [
-            BottomNavigationBarItem(icon: Icon(Icons.ac_unit_outlined), label: "1"),
-            BottomNavigationBarItem(icon: Icon(Icons.assistant_direction_outlined),label: "2"),
-            BottomNavigationBarItem(icon: Icon(Icons.policy_outlined), label: "3"),
+          items: const  [
+            BottomNavigationBarItem(icon: Icon(Icons.face), label: "профиль"),
+            BottomNavigationBarItem(icon: Icon(Icons.mail),label: "чат"),
+            BottomNavigationBarItem(icon: Icon(Icons.bookmark), label: "лексика"),
           ],
         ),
     );

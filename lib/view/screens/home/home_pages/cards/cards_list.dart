@@ -11,8 +11,7 @@ class _CardsListState extends State<CardsList> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.purple,
-      child: ListView(children: [Text("profile")]),
+      child: ListView(children: [Text("Developing")]),
     );
   }
 }

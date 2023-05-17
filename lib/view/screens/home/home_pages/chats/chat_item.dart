@@ -30,11 +30,28 @@ class _ChatItemState extends State<ChatItem> {
             child: Container(
               padding: EdgeInsets.all(10),
               constraints: const BoxConstraints(minHeight: 80),
-              decoration: BoxDecoration(border: Border.all(color: AppColors.blue, width: 3), borderRadius: BorderRadius.all(Radius.circular(15))),
+              decoration: BoxDecoration(
+                border: Border.all(color: AppColors.blue, width: 2),
+                borderRadius: BorderRadius.all(Radius.circular(15)),
+                gradient: LinearGradient(
+                  begin: Alignment.centerLeft,
+                  end: Alignment.centerRight,
+                  colors: [
+                    AppColors.purple.withAlpha(50),
+                    AppColors.sky,
+                  ],
+                ),
+              ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: [Text('name: ${widget.session.sessionName}'), Text('date: ${widget.session.sessionTimeCreation}')],
+                children: [
+                  Text(
+                    'name: ${widget.session.sessionName}',
+                    style: TextStyle(color: AppColors.dark),
+                  ),
+                  Text('date: ${widget.session.sessionTimeCreation}', style: TextStyle(color: AppColors.dark)),
+                ],
               ),
             ),
           ),
@@ -45,16 +62,12 @@ class _ChatItemState extends State<ChatItem> {
         Container(
           width: 50,
           height: 50,
-          decoration: BoxDecoration(
-            color: Colors.transparent,
-            shape: BoxShape.circle,
-            border: Border.all(color: AppColors.blue,  width: 3)
-          ),
+          decoration: BoxDecoration(color: Colors.transparent, shape: BoxShape.circle, border: Border.all(color: AppColors.blue, width: 2)),
           child: PopupMenuButton(
-            itemBuilder: (_) => const <PopupMenuItem<String>>[
-                  PopupMenuItem<String>(child: Text('Doge'), value: 'удалить'),
-                  PopupMenuItem<String>(child: Text('Lion'), value: 'изменить'),
-                ],
+              itemBuilder: (_) => const <PopupMenuItem<String>>[
+                    PopupMenuItem<String>(child: Text('Doge'), value: 'удалить' ),
+                    PopupMenuItem<String>(child: Text('Lion'), value: 'изменить'),
+                  ],
               onSelected: (_) {}),
         )
       ],

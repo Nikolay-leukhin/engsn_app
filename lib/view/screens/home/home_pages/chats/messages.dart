@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:engsn_corected/view/utils/colors.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -21,6 +22,7 @@ class MessagesList extends StatefulWidget {
 
 class _MessagesListState extends State<MessagesList> {
   TextEditingController controller = TextEditingController();
+  ScrollController scrollController = ScrollController();
 
   void initState() {
     context.read<MessagesBloc>().add(LoadMessagesEvent(widget.session.id));
@@ -29,8 +31,8 @@ class _MessagesListState extends State<MessagesList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.cherry,
       appBar: AppBar(
+        backgroundColor: AppColors.dark,
         title: Text('Chat: ${widget.session.sessionName}'),
       ),
       body: Padding(
@@ -48,6 +50,8 @@ class _MessagesListState extends State<MessagesList> {
                 );
               } else if (state is MessagesLoaded) {
                 return ListView.separated(
+                    controller: scrollController,
+                    cacheExtent: 10,
                     itemBuilder: (context, index) {
                       return MessagesItem(
                         message: state.messages[index],
