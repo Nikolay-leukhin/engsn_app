@@ -34,16 +34,24 @@ class _LoginPageState extends State<LoginPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text("Вход"),
-                  const SizedBox(
-                    height: 20,
-                  ),
                   Container(
                     decoration: const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.all(Radius.circular(20))),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        Text(
+                          'Вход',
+                          textAlign: TextAlign.center,
+                          style: Theme.of(context).textTheme.headlineMedium,
+                        ),
+
+                        const SizedBox(
+                          height: 20,
+                        ),
                         DefaultTextField(
                           controller: _emailController,
                           keyboardType: TextInputType.emailAddress,
@@ -55,12 +63,15 @@ class _LoginPageState extends State<LoginPage> {
                           keyboardType: TextInputType.name,
                           hintText: "pwd",
                           icon: (Icons.lock),
+                          obscureText: true,
                         ),
                         BlocListener<LoginBloc, LoginState>(
                           listener: (context, state) async {
                             if (context.read<LoginBloc>().state is LoginLoaded) {
                               await Future.delayed(Duration(seconds: 1));
+                              // ignore: use_build_context_synchronously
                               Navigator.of(context).pop();
+                              // ignore: use_build_context_synchronously
                               Navigator.of(context).popAndPushNamed("/home");
                             }
                           },
@@ -73,20 +84,35 @@ class _LoginPageState extends State<LoginPage> {
                               showDialog(context: context, builder: (_) => ProfileLoadingPopup());
                             },
                           ),
-                        )
+                        ),
+
                       ],
                     ),
                   ),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text("Еще нет аккаунта,"),
+                      Text("Еще нет аккаунта,",
+                        style: TextStyle(
+                            fontSize: 15,
+                            color: AppColors.black
+                        ),),
                       TextButton(
-                          onPressed: () {
-                            Navigator.of(context).pushNamed('/signin');
-                          },
-                          child: Text('регистрация'))
+                        onPressed: () {
+                          Navigator.of(context).pushNamed('/signin');
+                        },
+                        child:
+                        const Text('регистрация',
+                          style: TextStyle(
+                            fontSize: 15,
+                          ),
+                        ),
+                      )
                     ],
-                  )
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
                 ],
               ),
             )

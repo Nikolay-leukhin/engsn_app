@@ -43,21 +43,28 @@ class _BaseTextFormFieldState extends State<DefaultTextField> {
       child: Padding(
         padding: widget.padding,
         child: TextFormField(
+
           maxLines: widget.maxLines,
           keyboardType: widget.keyboardType,
           autofocus: false,
           obscureText: widget.obscureText,
           textAlignVertical: TextAlignVertical.bottom,
-          style: TextStyle(color: Colors.grey),
+          style: TextStyle(color: Colors.black),
           decoration: InputDecoration(
-            prefixIcon: Icon(widget.icon, color: Colors.grey,),
-            hintStyle: TextStyle(
-              color: Colors.grey
+            prefixIcon: Icon(widget.icon),
+            prefixIconColor:
+            MaterialStateColor.resolveWith((Set<MaterialState> states) {
+              if (states.contains(MaterialState.focused)) {
+                return AppColors.blue_purple;
+              }
+              return AppColors.light;
+            }),
+            label: Text(
+              widget.hintText,
+              style: Theme.of(context).textTheme.labelSmall,
             ),
             fillColor: Colors.grey.withAlpha(10),
             filled: true,
-            hintText: widget.hintText,
-            label: widget.controller.text != '' ? Text(widget.hintText) : null,
             border: const OutlineInputBorder(
               borderRadius: BorderRadius.all(
                 Radius.circular(10.0),
@@ -65,7 +72,7 @@ class _BaseTextFormFieldState extends State<DefaultTextField> {
             ),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10.0),
-              borderSide:  BorderSide(
+              borderSide:  const BorderSide(
                 color: Colors.grey,
               ),
             ),
@@ -75,6 +82,7 @@ class _BaseTextFormFieldState extends State<DefaultTextField> {
                 color: AppColors.blue,
               ),
             ),
+
           ),
 
           onChanged: (String value) {
