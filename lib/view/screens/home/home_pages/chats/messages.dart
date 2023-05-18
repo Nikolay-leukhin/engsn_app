@@ -5,6 +5,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../../data/models/message.dart';
 import '../../../../../data/models/session.dart';
 import '../../../../../logic/home/messages/messages_bloc.dart';
 import '../../../../widgets/default_button.dart';
@@ -24,9 +25,12 @@ class _MessagesListState extends State<MessagesList> {
   TextEditingController controller = TextEditingController();
   ScrollController scrollController = ScrollController();
 
+  @override
   void initState() {
     context.read<MessagesBloc>().add(LoadMessagesEvent(widget.session.id));
+    super.initState();
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -50,11 +54,11 @@ class _MessagesListState extends State<MessagesList> {
                 );
               } else if (state is MessagesLoaded) {
                 return ListView.separated(
-                    controller: scrollController,
+                    reverse: true,
                     cacheExtent: 10,
                     itemBuilder: (context, index) {
                       return MessagesItem(
-                        message: state.messages[index],
+                        message: state.messages[state.messagesCount - index - 1],
                       );
                     },
                     separatorBuilder: (context, index) =>
@@ -82,26 +86,30 @@ class _MessagesListState extends State<MessagesList> {
               ),
               DefaultElevatedButton(
                 width: 100,
-                title: "pom->",
+                title: "=>",
                 onPressed: () {
                   MessagesBloc bloc = context.read<MessagesBloc>();
+
                   int userId = bloc.userRepository.userBox.get("user").id;
                   int sessionId = widget.session.id;
                   int order = bloc.state is MessagesLoaded ? (bloc.state as MessagesLoaded).messagesCount + 1 : 1;
                   String text = controller.text;
                   String sender = "user";
 
+                  var userMessageModel = (Message(
+                    userId: userId,
+                    sender: sender,
+                    messageOrder: order,
+                    messageText: text,
+                    sessionId: sessionId,
+                  ));
+
                   controller.clear();
+                  FocusScope.of(context).unfocus();
 
-                  bloc.add(SendMessageEvent(userId, sessionId, order, text, sender));
-
-                  Future.delayed(Duration.zero).then((_) {
-                    bloc.add(LoadMessagesEvent(sessionId));
-                  });
-
+                  bloc.add(SendMessageEvent(userMessageModel));
                 },
               )
-
             ],
           )
         ]),

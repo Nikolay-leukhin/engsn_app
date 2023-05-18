@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 
 import '../../../data/models/message.dart';
@@ -17,22 +18,38 @@ class MessagesBloc extends Bloc<MessagesEvent, MessagesState> {
     on<SendMessageEvent>(_sendMessage);
   }
 
-  void _loadMessages(event, emit) async{
-    emit(MessagesLoading());
+  void _loadMessages(event, emit) async {
+    print(state);
     int userId = userRepository.userBox.get('user').id;
     int sessionId = (event as LoadMessagesEvent).sessionId;
 
-    List<Message> messages = await userRepository.loadMessages(sessionId, userId);
-    if (messages.isEmpty) {
-      emit(MessagesLoadedEmpty());
-    }else if (messages.isNotEmpty){
+    try {
+      List<Message> messages = await userRepository.loadMessages(sessionId, userId);
       emit(MessagesLoaded(messages));
-    }else{
+    } catch (ex) {
       emit(MessagesLoadedFailure());
     }
   }
 
-  void _sendMessage(event, emit) async{
-    var response = await userRepository.sendMessage(event.userId, event.sessionId, event.order, event.text, event.sender);
+  void _sendMessage(event, emit) async {
+    List<Message> currentMessagesList = (state as MessagesLoaded).messages;
+    currentMessagesList.add((event as SendMessageEvent).message);
+
+    var botPreMsg = (Message(
+      userId: event.message.userId,
+      sender: "loading",
+      messageOrder: event.message.messageOrder + 1,
+      messageText: "Loading...",
+      sessionId: event.message.sessionId,
+    ));
+
+    currentMessagesList.add(botPreMsg);
+    emit(MessagesLoaded(currentMessagesList));
+
+    Message botMessage = await userRepository.sendMessage(
+        event.message.userId, event.message.sessionId, event.message.messageOrder, event.message.messageText, event.message.sender);
+    (state as MessagesLoaded).messages.removeLast();
+    (state as MessagesLoaded).messages.add(botMessage);
+    emit(MessagesLoaded(currentMessagesList));
   }
 }

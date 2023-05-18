@@ -34,7 +34,7 @@ class _ChatListState extends State<ChatList> {
           child: BlocBuilder<ChatBloc, ChatState>(
               builder: (context, state) {
                 if (state is LoadingChatList) {
-                  return Center(child: CircularProgressIndicator());
+                  return const Center(child: CircularProgressIndicator());
                 }
                 if (state is LoadedChatList) {
                   return Container(

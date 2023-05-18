@@ -14,64 +14,30 @@ class MessagesItem extends StatefulWidget {
 class _MessagesItemState extends State<MessagesItem> {
   @override
   Widget build(BuildContext context) {
-    return widget.message.sender == 'user' ? _userMessage() : _botMessage();
-  }
-
-  Widget _userMessage(){
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.end,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Container(
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
+      child: Align(
+        alignment: widget.message.sender == "user"  ? Alignment.centerRight : Alignment.centerLeft,
+        child: Container(
           constraints: BoxConstraints(
-              maxWidth: MediaQuery.of(context).size.width * 0.6
+            maxWidth: MediaQuery.of(context).size.width * 0.7,
           ),
-          alignment: Alignment.centerRight,
+          padding: EdgeInsets.all(12.0),
           decoration: BoxDecoration(
-              color: AppColors.purple,
-              borderRadius: BorderRadius.all(Radius.circular(15)),
-              border: Border.all(color: Colors.white70, width: 3)),
-          padding: EdgeInsets.all(15),
-          child: Column(
-
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Text('${widget.message.messageText},', textAlign: TextAlign.end)
-            ],
+            color: widget.message.sender == "user" ? Colors.blue : Colors.grey,
+            borderRadius: BorderRadius.circular(16.0),
+          ),
+          child: widget.message.sender == "loading" ?
+          CircularProgressIndicator() :
+          Text(
+            widget.message.messageText,
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 16.0,
+            ),
           ),
         ),
-        SizedBox(width: 10,),
-        Icon(Icons.face_2_outlined, size: 30,)
-      ],
-    );
-  }
-
-
-  Widget _botMessage(){
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Icon(Icons.terminal_rounded),
-        Container(
-          constraints: BoxConstraints(
-            maxWidth: MediaQuery.of(context).size.width * 0.6
-          ),
-          alignment: Alignment.centerLeft,
-          decoration: BoxDecoration(
-              color: AppColors.blue,
-              borderRadius: BorderRadius.all(Radius.circular(15)),
-              border: Border.all(color: Colors.white70, width: 3)),
-          padding: EdgeInsets.all(15),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text('${widget.message.messageText}', textAlign: TextAlign.start,)
-            ],
-          ),
-        ),
-
-      ],
+      ),
     );
   }
 }

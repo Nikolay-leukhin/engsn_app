@@ -14,7 +14,6 @@ class MessagesLoaded extends MessagesInitial{
   MessagesLoaded(this.messages);
 
   int get messagesCount => messages.length;
-
 }
 
 class MessagesLoadedEmpty extends MessagesState{}

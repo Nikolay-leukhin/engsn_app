@@ -11,8 +11,12 @@ part 'login_state.dart';
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   final UserRepository userRepository;
   LoginBloc(this.userRepository) : super(LoginInitial()) {
-    on<LoginButtonPressed>((event, emit) async{
+    on<LoginButtonPressed>(_loginEntire);
+    on<LogoutButtonPressed>(_loginOut);
+  }
 
+  void _loginEntire(event, emit) async{
+    {
       print("login button pressed..");
       emit(LoginLoading());
       var result = await userRepository.login(event.email, event.password);
@@ -25,6 +29,17 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         print('Login failed');
         emit(LoginFailure());
       }
-    });
+    }
   }
+
+  void _loginOut(event, emit) async{
+    try{
+      await userRepository.clearUserCache();
+    }
+    catch(ex){
+      print(ex);
+      rethrow;
+    }
+  }
+
 }

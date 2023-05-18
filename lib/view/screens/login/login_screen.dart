@@ -77,6 +77,16 @@ class _LoginPageState extends State<LoginPage> {
                       ],
                     ),
                   ),
+                  Row(
+                    children: [
+                      Text("Еще нет аккаунта,"),
+                      TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pushNamed('/signin');
+                          },
+                          child: Text('регистрация'))
+                    ],
+                  )
                 ],
               ),
             )

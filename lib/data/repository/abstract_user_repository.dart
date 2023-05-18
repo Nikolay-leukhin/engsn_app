@@ -19,4 +19,6 @@ abstract class AbstractUserRepository{
   Future<dynamic> addUserSession(String sessionName);
 
   Future<dynamic> loadMessages(int sessionId, int userId);
+
+  Future<void> clearUserCache();
 }

@@ -1,3 +1,4 @@
+import 'package:engsn_corected/logic/login/login_bloc.dart';
 import 'package:engsn_corected/view/utils/colors.dart';
 import 'package:engsn_corected/view/widgets/default_button.dart';
 import 'package:engsn_corected/view/widgets/default_text_field.dart';
@@ -40,6 +41,7 @@ class _ProfileState extends State<Profile> {
                   child: IconButton(
                     onPressed: () {
                       Navigator.of(context).pop();
+                      context.read<LoginBloc>().add(LogoutButtonPressed());
                       Navigator.of(context).pushNamed('/login');
                     },
                     icon: const Icon(Icons.arrow_circle_left_outlined, size: 40, color: Colors.blueAccent),
@@ -52,7 +54,7 @@ class _ProfileState extends State<Profile> {
                   width: 150,
                   height: 150,
                   decoration: BoxDecoration(shape: BoxShape.circle, color: AppColors.cherry),
-                  child: Icon(
+                  child: const Icon(
                     Icons.savings_outlined,
                     size: 100,
                     color: Colors.white,

@@ -33,6 +33,8 @@ class _ChatAddSessionPopupState extends State<ChatAddSessionPopup> {
         DefaultElevatedButton(title: "бом", onPressed: () {
           context.read<ChatBloc>().add(RegisterSessionEvent(sessionName: widget.controller.text));
           context.read<ChatBloc>().add(LoadSessionsEvent());
+          widget.controller.clear();
+          FocusScope.of(context).unfocus();
           Navigator.of(context).pop();
         })
       ],

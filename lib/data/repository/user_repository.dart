@@ -143,7 +143,7 @@ class UserRepository implements AbstractUserRepository{
       int itemSessionId = item['session_id'];
       int itemUserId = item['user_id'];
       String itemText = item['message_text'];
-      messages.add(Message(itemId, itemOrder, itemSender, itemSessionId, itemUserId, itemText));
+      messages.add(Message(id:itemId, messageOrder: itemOrder,sender: itemSender,sessionId: itemSessionId, userId: itemUserId,messageText : itemText));
     }
     return messages;
   }
@@ -153,5 +153,22 @@ class UserRepository implements AbstractUserRepository{
     print("-------MESSAGE SENDING...-------");
     Map<String, dynamic> rawResponse = await api.sendMessageRequest(userId, sessionId, order, text, sender);
     print("-------MESSAGE SENDED-------");
+    Message botMessage = Message(
+        messageText: rawResponse['message_text'],
+        messageOrder: rawResponse['message_order'],
+        sender: rawResponse['sender'],
+        sessionId: rawResponse['session_id'],
+        userId: rawResponse['user_id']
+
+    );
+    return botMessage;
   }
+
+  Future<void> clearUserCache() async{
+    print("-------user deleted-------");
+    await userBox.delete("user");
+    print("-------user deleted-------");
+
+  }
+
 }
