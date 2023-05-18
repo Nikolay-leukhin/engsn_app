@@ -10,6 +10,7 @@ import '../../../../../data/models/session.dart';
 import '../../../../../logic/home/messages/messages_bloc.dart';
 import '../../../../widgets/default_button.dart';
 import '../../../../widgets/default_text_field.dart';
+import '../../../../widgets/loading_indicator.dart';
 import 'messages_item.dart';
 
 class MessagesList extends StatefulWidget {
@@ -36,7 +37,7 @@ class _MessagesListState extends State<MessagesList> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: AppColors.dark,
+        backgroundColor: AppColors.blue,
         title: Text('Chat: ${widget.session.sessionName}'),
       ),
       body: Padding(
@@ -46,7 +47,7 @@ class _MessagesListState extends State<MessagesList> {
             child: BlocBuilder<MessagesBloc, MessagesState>(builder: (context, state) {
               if (state is MessagesLoading) {
                 return const Center(
-                  child: CircularProgressIndicator(),
+                  child: LoadingIndicator(),
                 );
               } else if (state is MessagesLoadedEmpty) {
                 return const Center(

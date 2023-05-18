@@ -95,10 +95,15 @@ class UserRepositoryAPI{
     };
     try{
       final Response response = await dio.post(apiURL[ApiMethods.existingRequest]!, queryParameters: userData);
-      print(response.data);
       return response.data;
     }catch(ex){
-      throw ex;
+      Future.delayed(Duration(seconds: 1));
+      try{
+        final Response response = await dio.post(apiURL[ApiMethods.existingRequest]!, queryParameters: userData);
+        return response.data;
+      }catch(ex){
+        throw ex;
+      }
     }
   }
 
@@ -115,7 +120,13 @@ class UserRepositoryAPI{
       final Response response = await dio.post(apiURL[ApiMethods.sendMessage]!, data: reqData);
       return response.data;
     }catch(ex){
-      throw ex;
+      Future.delayed(Duration(seconds: 1));
+      try{
+        final Response response = await dio.post(apiURL[ApiMethods.sendMessage]!, data: reqData);
+        return response.data;
+      }catch(ex){
+        throw ex;
+      }
     }
   }
 }

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../logic/login/login_bloc.dart';
 import '../../utils/colors.dart';
+import '../../widgets/loading_indicator.dart';
 
 class ProfileLoadingPopup extends StatefulWidget {
   const ProfileLoadingPopup({Key? key}) : super(key: key);
@@ -26,7 +27,7 @@ class _ProfileLoadingPopupState extends State<ProfileLoadingPopup> {
               builder: (context, state)  {
                 if (state is LoginLoading) {
                   return Center(
-                    child: CircularProgressIndicator(),
+                    child: LoadingIndicator(),
                   );
                 } else if (state is LoginLoaded) {
                   return const Center(

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 import '../../../../../data/models/message.dart';
 import '../../../../utils/colors.dart';
+import '../../../../widgets/loading_indicator.dart';
 
 class MessagesItem extends StatefulWidget {
   final Message message;
@@ -28,7 +30,10 @@ class _MessagesItemState extends State<MessagesItem> {
             borderRadius: BorderRadius.circular(16.0),
           ),
           child: widget.message.sender == "loading" ?
-          CircularProgressIndicator() :
+          LoadingAnimationWidget.staggeredDotsWave(
+            color: Colors.white,
+            size: 30,
+          ) :
           Text(
             widget.message.messageText,
             style: TextStyle(

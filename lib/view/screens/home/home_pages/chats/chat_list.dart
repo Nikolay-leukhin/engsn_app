@@ -6,6 +6,7 @@ import '../../../../../data/repository/user_repository.dart';
 import '../../../../../logic/app/app_bloc.dart';
 import '../../../../../logic/home/chat/chat_bloc.dart';
 import '../../../../utils/colors.dart';
+import '../../../../widgets/loading_indicator.dart';
 import 'chat_add_popup.dart';
 
 class ChatList extends StatefulWidget {
@@ -34,7 +35,7 @@ class _ChatListState extends State<ChatList> {
           child: BlocBuilder<ChatBloc, ChatState>(
               builder: (context, state) {
                 if (state is LoadingChatList) {
-                  return const Center(child: CircularProgressIndicator());
+                  return const Center(child: LoadingIndicator());
                 }
                 if (state is LoadedChatList) {
                   return Container(
