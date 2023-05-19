@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:engsn_corected/logic/home/chat/chat_bloc.dart';
 import 'package:engsn_corected/view/widgets/default_button.dart';
 import 'package:flutter/material.dart';
@@ -18,26 +20,32 @@ class ChatAddSessionPopup extends StatefulWidget {
 class _ChatAddSessionPopupState extends State<ChatAddSessionPopup> {
   @override
   Widget build(BuildContext context) {
-    return AlertDialog(
-      backgroundColor: AppColors.sky,
-      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20))),
-      title: Text("О чем бы вы хотели бы поговорить?"),
-      content: TextField(
-        autofocus: true,
-        controller: widget.controller,
-        decoration: InputDecoration(
-            hintText: "ананааасы=)"
-        ),
+    return BackdropFilter(
+      filter: ImageFilter.blur(
+          sigmaX: 5.0,
+          sigmaY: 5.0
       ),
-      actions: [
-        DefaultElevatedButton(title: "бом", onPressed: () {
-          context.read<ChatBloc>().add(RegisterSessionEvent(sessionName: widget.controller.text));
-          context.read<ChatBloc>().add(LoadSessionsEvent());
-          widget.controller.clear();
-          FocusScope.of(context).unfocus();
-          Navigator.of(context).pop();
-        })
-      ],
+      child: AlertDialog(
+        backgroundColor: AppColors.sky,
+        shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20))),
+        title: Text("О чем бы вы хотели бы поговорить?"),
+        content: TextField(
+          autofocus: true,
+          controller: widget.controller,
+          decoration: InputDecoration(
+              hintText: "ананааасы=)"
+          ),
+        ),
+        actions: [
+          DefaultElevatedButton(title: "бом", onPressed: () {
+            context.read<ChatBloc>().add(RegisterSessionEvent(sessionName: widget.controller.text));
+            context.read<ChatBloc>().add(LoadSessionsEvent());
+            widget.controller.clear();
+            FocusScope.of(context).unfocus();
+            Navigator.of(context).pop();
+          })
+        ],
+      ),
     );
   }
 }

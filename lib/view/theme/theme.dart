@@ -13,7 +13,12 @@ final lightTheme = ThemeData(
         labelSmall: GoogleFonts.puritan(
             color: AppColors.light,
             fontSize: 18,
-            fontWeight: FontWeight.w400
+            fontWeight: FontWeight.w600
+        ),
+        headlineSmall: GoogleFonts.beVietnamPro(
+            color: AppColors.cherry,
+            fontSize: 25,
+            fontWeight: FontWeight.w600
         ),
         bodyMedium: GoogleFonts.puritan(
             color: AppColors.black,

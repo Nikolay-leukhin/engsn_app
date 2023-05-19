@@ -2,6 +2,7 @@ import 'package:engsn_corected/view/screens/home/home_pages/chats/messages.dart'
 import 'package:engsn_corected/view/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 
 import '../../../../../data/models/session.dart';
 import '../../../../../logic/app/app_bloc.dart';
@@ -47,10 +48,10 @@ class _ChatItemState extends State<ChatItem> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'name: ${widget.session.sessionName}',
-                    style: TextStyle(color: AppColors.dark),
+                    '${widget.session.sessionName}',
+                    style: Theme.of(context).textTheme.headlineSmall,
                   ),
-                  Text('date: ${widget.session.sessionTimeCreation}', style: TextStyle(color: AppColors.dark)),
+                  Text(DateFormat.yMMMEd().format(widget.session.sessionTimeCreation),style: Theme.of(context).textTheme.titleSmall),
                 ],
               ),
             ),
