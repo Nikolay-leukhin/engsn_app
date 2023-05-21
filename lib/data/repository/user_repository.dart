@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dio/src/dio.dart';
 import 'package:engsn_corected/data/api/user_repository_api.dart';
 import 'package:engsn_corected/data/models/message.dart';
@@ -38,15 +40,11 @@ class UserRepository implements AbstractUserRepository{
   UserRepository(this.userBox);
 
   @override
-  Future<dynamic> addUser() async {
-    if (nickname == null || password == null || email == null || englishLevel == null){
-      print("one of the required isnt filled");
-      throw ArgumentError.value("Fill all fields");
-    }
+  Future<dynamic> addUser(String nickname, String email, String password, String englishLevel) async {
     var userModel = User.transformUserModelToRegistration(nickname, email, password, englishLevel);
     var response = await api.registerUserRequest(userModel);
 
-    print("User add reauset sended : $response");
+    log("User add request sended : $response");
 
     Map<String, dynamic> rawAddedUser = response['added_user'];
     return RepositoryResponseCodes.succes;

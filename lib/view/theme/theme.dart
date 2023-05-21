@@ -6,9 +6,10 @@ final lightTheme = ThemeData(
     scaffoldBackgroundColor: AppColors.sky,
     textTheme: TextTheme(
         headlineMedium: GoogleFonts.beVietnamPro(
+            height: 0,
             color: AppColors.black,
-            fontSize: 35,
-            fontWeight: FontWeight.w700
+            fontSize: 28,
+            fontWeight: FontWeight.w700,
         ),
         labelSmall: GoogleFonts.puritan(
             color: AppColors.light,

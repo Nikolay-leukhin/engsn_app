@@ -12,6 +12,7 @@ import 'logic/app/app_bloc.dart';
 import 'logic/home/messages/messages_bloc.dart';
 import 'logic/home/profile/profile_bloc.dart';
 import 'logic/login/login_bloc.dart';
+import 'logic/signin/signin_bloc.dart';
 
 void main() async {
   const String userBoxName = "user_box";
@@ -37,9 +38,8 @@ void main() async {
         BlocProvider(
           create: (context) => ProfileBloc(_userRepository),
         ),
-        BlocProvider<LoginBloc>(
-            create: (context) => LoginBloc(_userRepository)
-        ),
+        BlocProvider<LoginBloc>(create: (context) => LoginBloc(_userRepository)),
+        BlocProvider<SigninBloc>(create: (context) => SigninBloc(_userRepository))
       ],
       child: App(),
     ),

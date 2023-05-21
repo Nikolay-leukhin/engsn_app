@@ -10,7 +10,7 @@ abstract class AbstractUserRepository{
 
   Future<dynamic> login(String userEmail, String userPassword);
 
-  Future<dynamic> addUser();
+  Future<dynamic> addUser(String nickname, String email, String password, String englishLevel);
 
   Future<dynamic> isUserExist(String userEmail, String userPassword);
 

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:engsn_corected/view/screens/home/home_pages/chats/chat_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -40,18 +42,12 @@ class _ChatListState extends State<ChatList> {
                 if (state is LoadedChatList) {
                   return Container(
                     padding: const EdgeInsets.fromLTRB(10, 10 , 10, 0),
-                    decoration: const  BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage('assets/back.png'),
-                          repeat: ImageRepeat.repeat,
-                        )
-                    ),
                     child: ListView.separated(
                       itemCount: state.sessions.length,
                       itemBuilder: (context, index) {
                         return ChatItem(session: state.sessions[state.sessions.length - index - 1],);
                       },
-                      separatorBuilder: (BuildContext context, int index) => SizedBox(
+                      separatorBuilder: (BuildContext context, int index) => const SizedBox(
                         height: 20,
                       ),
                     ),
@@ -70,7 +66,7 @@ class _ChatListState extends State<ChatList> {
           ),
         floatingActionButton: FloatingActionButton(
           onPressed: () async {
-            print("Sesison adding started");
+            log("Sesison adding started");
             showDialog(
                 context: context,
                 builder: (context) => ChatAddSessionPopup(

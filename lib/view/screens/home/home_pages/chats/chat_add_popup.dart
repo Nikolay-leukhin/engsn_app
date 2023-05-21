@@ -28,12 +28,12 @@ class _ChatAddSessionPopupState extends State<ChatAddSessionPopup> {
       child: AlertDialog(
         backgroundColor: AppColors.sky,
         shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20))),
-        title: Text("О чем бы вы хотели бы поговорить?"),
+        title: const Text("О чем бы вы хотели бы поговорить?"),
         content: TextField(
           autofocus: true,
           controller: widget.controller,
-          decoration: InputDecoration(
-              hintText: "ананааасы=)"
+          decoration: const InputDecoration(
+              hintText: "тут могла быть ваша тема"
           ),
         ),
         actions: [
