@@ -46,6 +46,7 @@ dependencies:
   intl: ^0.17.0
   google_nav_bar: ^5.0.6
   curved_navigation_bar: ^1.0.3
+  flashy_tab_bar2: ^0.0.6
 
 
 dev_dependencies:
@@ -70,6 +71,7 @@ flutter:
 
   assets:
      - assets/back.png
+     - assets/ava.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

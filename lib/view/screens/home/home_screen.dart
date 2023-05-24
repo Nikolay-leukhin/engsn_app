@@ -1,10 +1,9 @@
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
-import 'package:engsn_corected/view/router/app_router.dart';
 import 'package:engsn_corected/view/screens/home/home_pages/home_pages.dart';
-import 'package:engsn_corected/view/utils/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_chat_ui/flutter_chat_ui.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:flashy_tab_bar2/flashy_tab_bar2.dart';
+
+import '../../utils/colors.dart';
 
 
 class HomePage extends StatefulWidget {
@@ -29,50 +28,45 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
         appBar: AppBar(
           elevation: 0,
-          backgroundColor: Colors.transparent,
+          backgroundColor: AppColors.darkcherry,
           title:
           Center(
             child:
             Text('Engsnp',
-            style: Theme.of(context).textTheme.headlineMedium,),
+            style: const TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+              fontSize: 25
+            ),),
           ),
         ),
         body:pages[_pageIndex],
-
-        bottomNavigationBar: Container(
-          color: Colors.white,
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 12.5),
-          child: GNav(
-            rippleColor: Colors.blueGrey.shade800,
-            hoverColor: Colors.blueGrey.shade700,
-            haptic: true,
-            tabBorderRadius: 25,
-            backgroundColor: Colors.white,
-            tabBackgroundColor: AppColors.sky.withOpacity(0.4),
-            duration: Duration(milliseconds: 300),
-            padding: const EdgeInsets.all(16),
-            gap: 8,
-            tabs: const [
-              GButton(
-                icon: Icons.face,
-                text: 'Профиль',
-                textSize: 10,
+        bottomNavigationBar: FlashyTabBar(
+            animationDuration: Duration(milliseconds: 600),
+            animationCurve: Curves.linear,
+            selectedIndex: _pageIndex,
+            iconSize: 25,
+            showElevation: false, // use this to remove appBar's elevation
+            onItemSelected: _onChanged,
+            backgroundColor: AppColors.darkcherry,
+            items: [
+              FlashyTabBarItem(
+                activeColor: AppColors.sky,
+                icon: Icon(Icons.person),
+                title: Text('Я', style: TextStyle(fontSize: 18),),
               ),
-              GButton(
-                icon: Icons.mail,
-                text: 'Мессенджер',
-                textSize: 10,
+              FlashyTabBarItem(
+                activeColor: AppColors.sky,
+                icon: Icon(Icons.message_outlined),
+                title: Text('Чат', style: TextStyle(fontSize: 18),),
               ),
-              GButton(
-                icon: Icons.bookmark,
-                text: 'Словарь',
-                textSize: 5,
+              FlashyTabBarItem(
+                activeColor: AppColors.sky,
+                icon: Icon(Icons.card_membership),
+                title: Text('Слова', style: TextStyle(fontSize: 18),),
               ),
             ],
-            selectedIndex: _pageIndex,
-            onTabChange: _onChanged,
           ),
-        )
-    );
+        );
   }
 }

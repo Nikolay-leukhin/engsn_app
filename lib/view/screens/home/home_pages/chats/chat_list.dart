@@ -65,6 +65,7 @@ class _ChatListState extends State<ChatList> {
             ),
           ),
         floatingActionButton: FloatingActionButton(
+          backgroundColor: AppColors.purple,
           onPressed: () async {
             log("Sesison adding started");
             showDialog(
@@ -74,7 +75,7 @@ class _ChatListState extends State<ChatList> {
                   buttonAction: () {},
                 ));
           },
-          child: Icon(Icons.add),
+          child: Icon(Icons.edit),
         ),
         ),
     );

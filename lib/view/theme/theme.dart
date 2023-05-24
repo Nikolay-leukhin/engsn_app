@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 final lightTheme = ThemeData(
-    scaffoldBackgroundColor: AppColors.sky,
+    scaffoldBackgroundColor: AppColors.cherry,
     textTheme: TextTheme(
         headlineMedium: GoogleFonts.beVietnamPro(
             height: 0,
@@ -31,6 +31,11 @@ final lightTheme = ThemeData(
             fontSize: 14,
             fontWeight: FontWeight.w400,
             height: 1
-        )
+        ),
+      bodySmall: GoogleFonts.openSans(
+        color: Colors.white,
+        fontSize: 20,
+        fontWeight: FontWeight.w600
+      )
     )
 );

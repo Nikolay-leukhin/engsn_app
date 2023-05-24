@@ -62,6 +62,7 @@ class _SigninLevelScreenState extends State<SigninLevelScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.sky,
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,

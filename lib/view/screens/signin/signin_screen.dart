@@ -29,6 +29,7 @@ class _SigninPageState extends State<SigninPage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        backgroundColor: AppColors.sky,
         appBar: AppBar(
           iconTheme: IconThemeData(color: AppColors.dark),
           elevation: 0,
