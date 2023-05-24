@@ -38,7 +38,8 @@ class _MessagesListState extends State<MessagesList> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColors.blue,
-        title: Text('Chat: ${widget.session.sessionName}'),
+        title: Text(widget.session.sessionName),
+        centerTitle: true,
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),

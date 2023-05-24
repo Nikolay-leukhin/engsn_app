@@ -42,7 +42,7 @@ class _HomePageState extends State<HomePage> {
         ),
         body:pages[_pageIndex],
         bottomNavigationBar: FlashyTabBar(
-            animationDuration: Duration(milliseconds: 600),
+            animationDuration: Duration(milliseconds: 300),
             animationCurve: Curves.linear,
             selectedIndex: _pageIndex,
             iconSize: 25,

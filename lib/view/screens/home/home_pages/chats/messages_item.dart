@@ -26,7 +26,7 @@ class _MessagesItemState extends State<MessagesItem> {
           ),
           padding: EdgeInsets.all(12.0),
           decoration: BoxDecoration(
-            color: widget.message.sender == "user" ? Colors.blue : Colors.grey,
+            color: widget.message.sender == "user" ? Colors.blue.shade900 : Colors.cyan.shade400.withOpacity(0.4),
             borderRadius: BorderRadius.circular(16.0),
           ),
           child: widget.message.sender == "loading" ?
