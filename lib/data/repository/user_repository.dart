@@ -9,15 +9,9 @@ import 'package:hive/hive.dart';
 import '../models/session.dart';
 import '../models/user.dart';
 
+enum RepositoryResponseCodes { succes, failure, incorrectData }
 
-enum RepositoryResponseCodes{
-  succes,
-  failure,
-  incorrectData
-}
-
-
-class UserRepository implements AbstractUserRepository{
+class UserRepository implements AbstractUserRepository {
   final Box userBox;
 
   @override
@@ -34,10 +28,12 @@ class UserRepository implements AbstractUserRepository{
 
   @override
   int? userId;
+  late final Dio dioClient;
+  late final UserRepositoryAPI api;
 
-  UserRepositoryAPI api = UserRepositoryAPI(dio: Dio());
-
-  UserRepository(this.userBox);
+  UserRepository({required this.userBox, required this.dioClient}) {
+    api = UserRepositoryAPI(dio: this.dioClient);
+  }
 
   @override
   Future<dynamic> addUser(String nickname, String email, String password, String englishLevel) async {
@@ -51,9 +47,9 @@ class UserRepository implements AbstractUserRepository{
   }
 
   @override
-  Future login(String userEmail, String userPassword) async{
+  Future login(String userEmail, String userPassword) async {
     final Map<String, dynamic> existing = await isUserExist(userEmail, userPassword);
-    if (existing['is_exist'] == false){
+    if (existing['is_exist'] == false) {
       return RepositoryResponseCodes.incorrectData;
     }
     Map<String, dynamic> rawUser = existing['user'];
@@ -69,7 +65,7 @@ class UserRepository implements AbstractUserRepository{
       sessionName: sessionName,
       userId: userId,
     );
-    return(response);
+    return (response);
   }
 
   @override
@@ -83,10 +79,10 @@ class UserRepository implements AbstractUserRepository{
     return responseData;
   }
 
-  Future<void> processCachingUser(Map<String, dynamic> requsetWithUser) async{
+  Future<void> processCachingUser(Map<String, dynamic> requsetWithUser) async {
     // request has to contain all information from user from the DB
     print("----------------KASHING STARTED-------------");
-    try{
+    try {
       User user = User(
         id: requsetWithUser['id'],
         latitude: requsetWithUser['latitude'],
@@ -107,17 +103,16 @@ class UserRepository implements AbstractUserRepository{
       userBox.put("user", user);
       print("user kashed $user");
       print("----------------KASHING ENDED-------------");
-    }catch(ex){
+    } catch (ex) {
       throw ex;
     }
-
   }
 
   @override
   Future<List<Session>> loadUserSessions() async {
     List rawSessions = await api.getRawUserSessionList(userBox.get("user").id);
     List<Session> sessionList = [];
-    for(int i = 0; i < rawSessions.length; i++){
+    for (int i = 0; i < rawSessions.length; i++) {
       Map<String, dynamic> item = rawSessions[i];
       String itemName = item['session_name'];
       int itemId = item['id'];
@@ -141,32 +136,22 @@ class UserRepository implements AbstractUserRepository{
       int itemSessionId = item['session_id'];
       int itemUserId = item['user_id'];
       String itemText = item['message_text'];
-      messages.add(Message(id:itemId, messageOrder: itemOrder,sender: itemSender,sessionId: itemSessionId, userId: itemUserId,messageText : itemText));
+      messages.add(Message(id: itemId, messageOrder: itemOrder, sender: itemSender, sessionId: itemSessionId, userId: itemUserId, messageText: itemText));
     }
     return messages;
   }
 
-
-  Future<dynamic> sendMessage(int userId, int sessionId, int order, String text, String sender) async{
+  Future<dynamic> sendMessage(int userId, int sessionId, int order, String text, String sender) async {
     print("-------MESSAGE SENDING...-------");
     Map<String, dynamic> rawResponse = await api.sendMessageRequest(userId, sessionId, order, text, sender);
     print("-------MESSAGE SENDED-------");
-    Message botMessage = Message(
-        messageText: rawResponse['message_text'],
-        messageOrder: rawResponse['message_order'],
-        sender: rawResponse['sender'],
-        sessionId: rawResponse['session_id'],
-        userId: rawResponse['user_id']
-
-    );
+    Message botMessage = Message(messageText: rawResponse['message_text'], messageOrder: rawResponse['message_order'], sender: rawResponse['sender'], sessionId: rawResponse['session_id'], userId: rawResponse['user_id']);
     return botMessage;
   }
 
-  Future<void> clearUserCache() async{
+  Future<void> clearUserCache() async {
     print("-------user deleted-------");
     await userBox.delete("user");
     print("-------user deleted-------");
-
   }
-
 }

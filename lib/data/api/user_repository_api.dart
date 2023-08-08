@@ -11,7 +11,7 @@ enum ApiMethods {
   loadSession,
   registerSession,
   getMessages,
-  sendMessage
+  sendMessage,
 }
 
 

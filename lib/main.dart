@@ -1,5 +1,10 @@
+import 'package:dio/dio.dart';
+import 'package:engsn_corected/data/repository/theme_repository.dart';
 import 'package:engsn_corected/data/repository/user_repository.dart';
+import 'package:engsn_corected/data/repository/words_repository.dart';
 import 'package:engsn_corected/logic/home/chat/chat_bloc.dart';
+import 'package:engsn_corected/logic/home/dictionary/themes/themes_bloc.dart';
+import 'package:engsn_corected/logic/home/dictionary/words/words_bloc.dart';
 import 'package:engsn_corected/view/screens/home/home_pages/chats/chat_list.dart';
 import 'package:engsn_corected/view/screens/login/login_screen.dart';
 import 'package:flutter/material.dart';
@@ -19,11 +24,22 @@ void main() async {
   await Hive.initFlutter();
   Hive.registerAdapter<User>(UserAdapter());
   var userBox = await Hive.openBox<User>(userBoxName);
+  Dio dio = Dio();
 
-  UserRepository _userRepository = UserRepository(userBox);
+  UserRepository _userRepository = UserRepository(userBox: userBox, dioClient: dio);
+  WordsRepository _wordsRepository = WordsRepository(dioClient: dio);
+  ThemeReposiotry _themeRepository = ThemeReposiotry(dio: dio, wordsRepository: _wordsRepository);
 
-  runApp(RepositoryProvider(
-    create: (context) => _userRepository,
+  runApp(MultiRepositoryProvider(
+    providers: [
+      RepositoryProvider(
+        create: (context) => _userRepository,
+      ),
+      RepositoryProvider(
+        create: (context) => _wordsRepository,
+      ),
+      RepositoryProvider(create: (context) => _themeRepository)
+    ],
     child: MultiBlocProvider(
       providers: [
         BlocProvider(
@@ -39,7 +55,9 @@ void main() async {
           create: (context) => ProfileBloc(_userRepository),
         ),
         BlocProvider<LoginBloc>(create: (context) => LoginBloc(_userRepository)),
-        BlocProvider<SigninBloc>(create: (context) => SigninBloc(_userRepository))
+        BlocProvider<SigninBloc>(create: (context) => SigninBloc(_userRepository)),
+        BlocProvider<ThemesBloc>(create: (context) => ThemesBloc(themeRepository: _themeRepository)),
+        BlocProvider<WordsBloc>(create: (context) => WordsBloc(wordsRepository: _wordsRepository),)
       ],
       child: App(),
     ),
